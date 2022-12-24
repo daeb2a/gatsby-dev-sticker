@@ -3,22 +3,38 @@ import React from "react";
 import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 
-function Blog({ data }: PageProps<Queries.BlogTitlesQuery>) { 
+function Blog({ data }: PageProps<Queries.BlogPostsQuery>) { 
    return (
     <Layout title="Blog">
       <p>The most recent news from my show.</p>
-      <ul>
-        {data.allFile.nodes.map((file, index) => <li key={index}>{file.name}</li>)}
-      </ul>
+      <section>
+        {data.allMdx.nodes.map((file, index) => (
+          <article key={index}>
+            <h3>{file.frontmatter?.title}</h3>
+            <h5>
+              {file.frontmatter?.author} in {file.frontmatter?.category}
+            </h5>
+            <h6>{file.frontmatter?.date}</h6>
+            <hr />
+            <p>{file.excerpt}</p>
+          </article>
+        ))}
+      </section>
     </Layout>
    );
 }
 
 export const query = graphql`
-  query BlogTitles {
-    allFile {
+  query BlogPosts {
+    allMdx {
       nodes {
-        name
+        frontmatter {
+          author
+          category
+          date(formatString: "YYYY-MM-DD")
+          title
+        }
+        excerpt(pruneLength: 50)
       }
     }
   }
