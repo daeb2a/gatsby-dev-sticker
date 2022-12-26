@@ -1,4 +1,5 @@
 import { graphql, PageProps, Link } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image";
 import React from "react"
 import Layout from "../../components/Layout";
 import Seo from "../../components/Seo";
@@ -7,6 +8,11 @@ export default function Blog({ data }: PageProps<Queries.BlogPostsQuery>) {
   console.log(data.allMdx.nodes)
    return (
     <Layout title="Blog">
+      <StaticImage
+        width={500} 
+        src="https://cdn.pixabay.com/photo/2021/11/29/15/01/christmas-6832802_960_720.jpg"
+        alt="Christmas"
+      />
       <p>The most recent news from my show.</p>
       <section>
         {data.allMdx.nodes.map((file, index) => (
