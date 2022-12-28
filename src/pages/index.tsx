@@ -5,11 +5,10 @@ import Layout from "../components/Layout";
 import Seo from "../components/Seo";
 
 export default function IndexPage({ data }: PageProps<Queries.StickersQuery>) {
- 
   return (
     <Layout title="Welcome to DevStickers">
       <div className="grid">
-        {data.allContentfulStickerPack.nodes.map(sticker => <article>
+        {data.allContentfulStickerPack.nodes.map((sticker, index) => <article key={index}>
           <GatsbyImage
             image={getImage(sticker.preview?.gatsbyImageData!)!}
             alt={sticker.name!}
